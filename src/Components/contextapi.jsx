@@ -22,7 +22,7 @@ export const ApiProvider = ({ children }) => {
       if (storedData) {
         const parsedData = JSON.parse(storedData);
 
-        // التحقق من صلاحية البيانات المستخرجة
+        // تحقق أن البيانات عبارة عن مصفوفة
         if (!Array.isArray(parsedData)) {
           throw new Error("Invalid data format in localStorage.");
         }
@@ -40,7 +40,7 @@ export const ApiProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Failed to load data from localStorage:", error);
-      localStorage.removeItem("data");
+      localStorage.removeItem("data"); // مسح البيانات التالفة
     } finally {
       setLoading(false);
     }
@@ -48,26 +48,31 @@ export const ApiProvider = ({ children }) => {
 
   const addData = useCallback(
     (newData) => {
-      if (
-        data.some(
-          (habit) =>
-            habit.habitName.toLowerCase() ===
-            newData.habitName.trim().toLowerCase()
-        )
-      ) {
-        return false; // فشل الإضافة بسبب تكرار الاسم
+      try {
+        if (
+          data.some(
+            (habit) =>
+              habit.habitName.toLowerCase() ===
+              newData.habitName.trim().toLowerCase()
+          )
+        ) {
+          return false; // فشل الإضافة بسبب تكرار الاسم
+        }
+
+        const habitWithDefaults = {
+          ...newData,
+          habitName: newData.habitName.trim(),
+          habitDescription: newData.habitDescription.trim(),
+          startDate: newData.startDate || new Date().toISOString(),
+          completionDates: [],
+        };
+
+        setData((prevData) => [...prevData, habitWithDefaults]);
+        return true;
+      } catch (error) {
+        console.error("Error adding new data:", error);
+        return false;
       }
-
-      const habitWithDefaults = {
-        ...newData,
-        habitName: newData.habitName.trim(),
-        habitDescription: newData.habitDescription.trim(),
-        startDate: newData.startDate || new Date().toISOString(),
-        completionDates: [],
-      };
-
-      setData((prevData) => [...prevData, habitWithDefaults]);
-      return true;
     },
     [data]
   );
