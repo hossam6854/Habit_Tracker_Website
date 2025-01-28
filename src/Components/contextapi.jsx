@@ -6,15 +6,14 @@ export const ApiProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    try {
-      if (!loading) {
-        localStorage.setItem("data", JSON.stringify(data));
-      }
-    } catch (error) {
-      console.error("Failed to save data to localStorage:", error);
-    }
-  }, [data, loading]);
+useEffect(() => {
+  try {
+    localStorage.setItem("data", JSON.stringify(data));
+  } catch (error) {
+    console.error("Failed to save data to localStorage:", error);
+  }
+}, [data]); // احفظ كلما تغيّر الـ data
+
 
   useEffect(() => {
     try {

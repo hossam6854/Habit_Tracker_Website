@@ -14,14 +14,17 @@ const AddHabit = () => {
   });
   const [message, setMessage] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]:
-        name === "numberOfDays" ? Math.max(0, parseInt(value) || 0) : value,
-    }));
-  };
+ const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]:
+      name === "numberOfDays"
+        ? Math.max(0, parseInt(value) || 0)
+        : value.trim(), // إزالة المسافات الزائدة
+  }));
+};
+
 
   const validateForm = () => {
     if (!formData.habitName.trim()) return "Habit name is required.";
