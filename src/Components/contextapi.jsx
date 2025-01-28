@@ -131,33 +131,39 @@ export const ApiProvider = ({ children }) => {
     );
   }, []);
 
-  const getMissedDates = (habit) => {
-    const today = new Date().toDateString();
-    const completedDates = new Set(habit.completionDates || []);
+const getMissedDates = (habit) => {
+  const today = new Date();
+  const completedDates = new Set(habit.completionDates || []);
+  const startDate = new Date(habit.startDate); // بداية العادة
+  const missedDays = JSON.parse(localStorage.getItem("missedDays")) || {};
 
-    // استرجاع الأيام الفائتة من التخزين المحلي
-    const missedDays = JSON.parse(localStorage.getItem("missedDays")) || {};
+  // التحقق من جميع الأيام بين البداية واليوم
+  let currentDate = new Date(startDate);
+  const missed = missedDays[habit.habitName] || [];
 
-    if (!completedDates.has(today)) {
-      if (!missedDays[habit.habitName]?.includes(today)) {
-        missedDays[habit.habitName] = [
-          ...(missedDays[habit.habitName] || []),
-          today,
-        ];
-        localStorage.setItem("missedDays", JSON.stringify(missedDays));
+  while (currentDate <= today) {
+    const dateStr = currentDate.toDateString(); // تحويل التاريخ لنفس التنسيق
+    if (!completedDates.has(dateStr)) {
+      if (!missed.includes(dateStr)) {
+        missed.push(dateStr); // إضافة الأيام المفقودة
       }
     } else {
       // إزالة اليوم من missedDays إذا تم استكمال العادة
-      if (missedDays[habit.habitName]?.includes(today)) {
-        missedDays[habit.habitName] = missedDays[habit.habitName].filter(
-          (date) => date !== today
-        );
-        localStorage.setItem("missedDays", JSON.stringify(missedDays));
+      const index = missed.indexOf(dateStr);
+      if (index !== -1) {
+        missed.splice(index, 1);
       }
     }
+    currentDate.setDate(currentDate.getDate() + 1); // الانتقال لليوم التالي
+  }
 
-    return missedDays[habit.habitName] || [];
-  };
+  // تحديث التخزين المحلي
+  missedDays[habit.habitName] = missed;
+  localStorage.setItem("missedDays", JSON.stringify(missedDays));
+
+  return missed;
+};
+
 
   const getCompletionRate = () => {
     const totalHabits = data.length;
