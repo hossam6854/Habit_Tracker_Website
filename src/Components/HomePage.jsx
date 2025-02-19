@@ -5,8 +5,8 @@ import Todos from "./todos";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
-import { Check, ChevronRight, Clock, Calendar, Trophy } from 'lucide-react';
-
+import { Clock, Calendar } from "lucide-react";
+import { FaListUl, FaTasks, FaPlus, FaMoon, FaSun } from "react-icons/fa";
 
 const HomePage = () => {
   const { data, updateDaysLeft, getMissedDates } = useContext(ApiContext);
@@ -62,40 +62,48 @@ const HomePage = () => {
         isDarkMode ? "bg-gray-800 text-white" : "bg-gray-50 text-gray-900"
       }`}
     >
-      {/* Navbar */}
-      <nav className="flex justify-between items-center mb-8 flex-wrap md:flex-nowrap">
+      <nav className="flex justify-between items-center mb-8 flex-wrap md:flex-nowrap p-4 shadow-md  rounded-lg transition-all">
         <div className="flex flex-wrap gap-4 md:flex-nowrap">
           <button
-            className={`text-lg font-semibold py-2 px-4 rounded-lg ${
-              activeTab === "habits" ? "bg-blue-500 text-white" : "bg-gray-200"
+            className={`flex items-center gap-2 text-lg font-semibold py-2 px-4 rounded-lg transition-all shadow-md
+            ${
+              activeTab === "habits"
+                ? "bg-gray-400 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
             }`}
             onClick={() => setActiveTab("habits")}
             aria-label="Show habits"
           >
-            Habits
+            <FaListUl /> Habits
           </button>
 
           <button
-            className={`text-lg font-semibold py-2 px-4 rounded-lg ${
-              activeTab === "todos" ? "bg-blue-500 text-white" : "bg-gray-200"
+            className={`flex items-center gap-2 text-lg font-semibold py-2 px-4 rounded-lg transition-all shadow-md
+            ${
+              activeTab === "todos"
+                ? "bg-gray-400 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
             }`}
             onClick={() => setActiveTab("todos")}
           >
-            Todos
+            <FaTasks /> Todos
           </button>
         </div>
+
         <div className="flex flex-wrap gap-4 md:flex-nowrap mt-4 md:mt-0">
           <button
-            className="text-lg font-semibold py-2 px-4 rounded-lg shadow-lg bg-blue-500 text-white hover:bg-blue-600"
+            className="flex items-center gap-2 text-lg font-semibold py-2 px-4 rounded-lg shadow-lg bg-green-500 text-white hover:bg-green-600 transition-all cursor-pointer"
             onClick={() => navigate("/add-habit")}
           >
-            Add Habit
+            <FaPlus /> Add Habit
           </button>
+
           <button
-            className="text-lg font-semibold py-2 px-4 rounded-lg shadow-lg bg-blue-500 text-white hover:bg-blue-600"
+            className="flex items-center gap-2 text-lg font-semibold py-2 px-4 rounded-lg shadow-lg bg-gray-700 text-white hover:bg-gray-600 transition-all cursor-pointer"
             onClick={toggleDarkMode}
           >
-            {isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
+            {isDarkMode ? <FaMoon /> : <FaSun />}{" "}
+            {isDarkMode ? "Dark Mode" : "Light Mode"}
           </button>
         </div>
       </nav>
@@ -113,7 +121,7 @@ const HomePage = () => {
             placeholder="Search for a habit..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="mb-6 w-full border p-3 rounded-lg text-black dark:text-black"
+            className={`mb-6 w-full border p-3 rounded-lg ${isDarkMode ? "text-white" : "text-black"}`}
             aria-label="Search habits"
           />
 
@@ -137,41 +145,45 @@ const HomePage = () => {
                   <strong>Description:</strong> {habit.habitDescription}
                 </p>
 
-
                 <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="space-y-1">
-                <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
-                  <Clock className="h-4 w-4" /> Days Left
-                </p>
-                <p className="font-semibold text-white dark:text-black">{habit.remainingDays}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
-                  <Calendar className="h-4 w-4" /> Started
-                </p>
-                <p className="font-semibold text-white dark:text-black">{new Date(habit.startDate).toLocaleDateString('en-GB')}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-muted-foreground text-white dark:text-black">Missed Days</p>
-                <p className="font-semibold text-red-600"> {getMissedDates(habit).length || 0} {getMissedDates(habit).length === 1 ? 'day' : 'days'}</p>
-              </div>
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
+                      <Clock className="h-4 w-4" /> Days Left
+                    </p>
+                    <p className="font-semibold text-white dark:text-black">
+                      {habit.remainingDays}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
+                      <Calendar className="h-4 w-4" /> Started
+                    </p>
+                    <p className="font-semibold text-white dark:text-black">
+                      {new Date(habit.startDate).toLocaleDateString("en-GB")}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground text-white dark:text-black">
+                      Missed Days
+                    </p>
+                    <p className="font-semibold text-red-600">
+                      {" "}
+                      {getMissedDates(habit).length || 0}{" "}
+                      {getMissedDates(habit).length === 1 ? "day" : "days"}
+                    </p>
+                  </div>
 
-              
-              <div className="space-y-1">
-                <p className="text-muted-foreground text-white dark:text-black">Completion Dates</p>
-                <p className="font-semibold text-green-600"> {habit.completionDates.length || 0} {habit.completionDates.length === 1 ? 'day' : 'days'}</p>
-              </div>
-
-            </div>
-
-
-
-                
-                
-
-
-
-             
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground text-white dark:text-black">
+                      Completion Dates
+                    </p>
+                    <p className="font-semibold text-green-600">
+                      {" "}
+                      {habit.completionDates.length || 0}{" "}
+                      {habit.completionDates.length === 1 ? "day" : "days"}
+                    </p>
+                  </div>
+                </div>
 
                 {/* Progress Bar */}
                 <div className="progress-bar bg-gray-300 rounded-full overflow-hidden h-4 my-4">
@@ -223,7 +235,7 @@ const HomePage = () => {
                 ) : (
                   <motion.button
                     onClick={() => updateDaysLeft(habit.habitName)}
-                    className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-blue-600 disabled:opacity-50 transition-all"
+                    className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-blue-600 disabled:opacity-50 transition-all cursor-pointer"
                     disabled={
                       habit.completedToday === new Date().toDateString()
                     }

@@ -9,6 +9,8 @@ import Todos from "./todos";
 import "./Css/Calendar.css";
 const Calendar = lazy(() => import("react-calendar"));
 import { useStore } from "./store";
+import { FaHome, FaListUl, FaTasks, FaMoon, FaSun } from "react-icons/fa";
+
 
 const HabitDetails = () => {
   const { habitName } = useParams();
@@ -156,7 +158,7 @@ const HabitDetails = () => {
         ) : (
           <motion.button
             onClick={() => updateDaysLeft(habit.habitName)}
-            className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-blue-600 disabled:opacity-50 transition-all"
+            className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-blue-600 disabled:opacity-50 transition-all cursor-pointer"
             disabled={habit.completedToday === new Date().toDateString()}
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
@@ -177,7 +179,7 @@ const HabitDetails = () => {
       {/* Edit and Delete Habit Buttons */}
       <div className="text-center mt-6 space-x-4">
         <button
-          className="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+          className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 cursor-pointer"
           onClick={handleEditHabit}
           data-tooltip-id="edit-tooltip"
         >
@@ -186,7 +188,7 @@ const HabitDetails = () => {
         <Tooltip id="edit-tooltip">Edit your habit details.</Tooltip>
 
         <button
-          className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+          className="bg-red-500  text-white font-bold py-2 px-4 rounded-full transition duration-300 cursor-pointer"
           onClick={() => {
             handleDeleteHabit();
             deleteAllTodosWithHabit(habitName);
@@ -209,46 +211,40 @@ const HabitTracker = () => {
 
   return (
     <div>
-      {/* Tab Navigation */}
-      <div
-        className={`tabs flex justify-center space-x-4 mt-4 p-4  shadow-lg ${
-          isDarkMode ? "bg-gray-800 text-white" : "bg-white"
-        }`}
+       <div
+      className={`tabs flex items-center justify-center space-x-4 p-4 shadow-xl  transition-all duration-300
+      ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
+    >
+      <button
+        className="flex items-center gap-2 bg-gray-700 text-white py-2 px-5 rounded-lg shadow-md hover:bg-gray-600 transition-all cursor-pointer"
+        onClick={() => navigate("/")}
       >
-        <button
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "habit"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setActiveTab("habit")}
-        >
-          {habitName} Details
-        </button>
-        <button
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "todos"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-          onClick={() => setActiveTab("todos")}
-        >
-          {habitName} Todos
-        </button>
-        <button
-          className="bg-gray-500 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-gray-600 transition-all"
-          onClick={() => navigate("/")}
-        >
-          Back to Home
-        </button>
-        <button
-          onClick={toggleDarkMode}
-          className="bg-gray-700 text-white py-1 px-4 rounded-lg ml-auto"
-        >
-          {isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
-        </button>
-      </div>
+        <FaHome /> Home
+      </button>
 
+      <button
+        className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow-md transition-all
+        ${activeTab === "habit" ? "bg-gray-400 text-white" : "bg-blue-500 hover:bg-blue-400 text-white  cursor-pointer"}`}
+        onClick={() => setActiveTab("habit")}
+      >
+        <FaListUl /> {habitName} Details
+      </button>
+
+      <button
+        className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow-md transition-all 
+        ${activeTab === "todos" ? "bg-gray-400 text-white" : "bg-blue-500 hover:bg-blue-400 text-white cursor-pointer"}`}
+        onClick={() => setActiveTab("todos")}
+      >
+        <FaTasks /> {habitName} Todos
+      </button>
+
+      <button
+        onClick={toggleDarkMode}
+        className="flex items-center gap-2 bg-gray-700 text-white py-2 px-5 rounded-lg shadow-md hover:bg-gray-600 transition-all ml-auto cursor-pointer"
+      >
+        {isDarkMode ? <FaMoon /> : <FaSun />} {isDarkMode ? "Dark Mode" : "Light Mode"}
+      </button>
+    </div>
       {activeTab === "habit" ? (
         <HabitDetails />
       ) : (

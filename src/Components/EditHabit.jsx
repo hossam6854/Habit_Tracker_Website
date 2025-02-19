@@ -83,66 +83,69 @@ return (
       <button
         onClick={toggleDarkMode}
         className="absolute top-4 right-4 px-4 py-2 rounded-lg font-bold transition-all shadow-md
-        bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+        bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 cursor-pointer"
       >
         {isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </button>
-
-      <div className={`max-w-lg mx-auto shadow-2xl rounded-xl p-8 mt-12 ${isDarkMode ? "bg-gray-900" : "bg-white"}`}>
-      <h2 className="text-3xl font-bold mb-6">Edit Habit</h2>    
-      <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label htmlFor="habitName" className="block font-medium mb-2">Habit Name</label>
-        <input
-          type="text"
-          name="habitName"
-          value={formData.habitName}
-          onChange={handleInputChange}
-          className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-            isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
-          }`}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="habitDescription" className="block font-medium mb-2">Habit Description</label>
-        <textarea
-          name="habitDescription"
-          value={formData.habitDescription}
-          onChange={handleInputChange}
-          className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-            isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
-          }`}
-        ></textarea>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="numberOfDays" className="block font-medium mb-2">Number of Days</label>
-        <input
-          type="number"
-          name="numberOfDays"
-          value={formData.numberOfDays}
-          onChange={handleInputChange}
-          className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-            isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
-          }`}
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full py-2 px-4 rounded-lg font-semibold shadow transition-all
-        bg-blue-500 text-white hover:bg-blue-600"
-      >
-        Save Changes
-      </button>
-    </form>
-
-    <Link
-      to={`/habit-tracker/${habitName}`}
-      className="mt-2 w-full py-2 px-4 rounded-lg font-semibold shadow transition-all block text-center
-      bg-gray-500 text-white hover:bg-gray-600"
+      <div className={`max-w-lg mx-auto shadow-2xl rounded-xl p-8 mt-12 ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+  <h2 className="text-3xl font-bold mb-6">Edit Habit</h2>    
+  <form onSubmit={handleSubmit}>
+    <div className="mb-4">
+      <label htmlFor="habitName" className={`block font-medium mb-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+        Habit Name
+      </label>
+      <input
+        type="text"
+        name="habitName"
+        value={formData.habitName}
+        onChange={handleInputChange}
+        className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
+          isDarkMode ? "bg-gray-700 border-gray-600 text-white focus:ring-blue-300" : "border-gray-300 text-black focus:ring-blue-500"
+        }`}
+      />
+    </div>
+    <div className="mb-4">
+      <label htmlFor="habitDescription" className={`block font-medium mb-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+        Habit Description
+      </label>
+      <textarea
+        name="habitDescription"
+        value={formData.habitDescription}
+        onChange={handleInputChange}
+        className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
+          isDarkMode ? "bg-gray-700 border-gray-600 text-white focus:ring-blue-300" : "border-gray-300 text-black focus:ring-blue-500"
+        }`}
+      ></textarea>
+    </div>
+    <div className="mb-4">
+      <label htmlFor="numberOfDays" className={`block font-medium mb-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+        Number of Days
+      </label>
+      <input
+        type="number"
+        name="numberOfDays"
+        value={formData.numberOfDays}
+        onChange={handleInputChange}
+        className={`w-full p-4 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
+          isDarkMode ? "bg-gray-700 border-gray-600 text-white focus:ring-blue-300" : "border-gray-300 text-black focus:ring-blue-500"
+        }`}
+      />
+    </div>
+    <button
+      type="submit"
+      className="w-full py-2 px-4 rounded-lg font-semibold shadow transition-all bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
     >
-      Back to Habit details
-    </Link>
+      Save Changes
+    </button>
+  </form>
 
+  <Link
+    to={`/habit-tracker/${habitName}`}
+    className={`mt-2 w-full py-2 px-4 rounded-lg font-semibold shadow transition-all block text-center 
+    bg-gray-500 hover:bg-gray-600 text-white`}
+  >
+    Back to Habit details
+  </Link>
     {message && (
       <div className={`mb-4 mt-4 p-4 rounded-lg transition-all text-white ${
         message.type === "success" ? "bg-green-500" :

@@ -75,7 +75,7 @@ const AddHabit = () => {
       <button
         onClick={toggleDarkMode}
         className="absolute top-4 right-4 px-4 py-2 rounded-lg font-bold transition-all shadow-md
-        bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+        bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 cursor-pointer"
       >
         {isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </button>
@@ -83,7 +83,7 @@ const AddHabit = () => {
       <h2 className="text-3xl font-bold mb-6">Add a New Habit</h2>
 
       <form onSubmit={handleSubmit} className={`p-6 rounded-xl shadow-lg w-full max-w-md transition-all duration-300 ${
-        isDarkMode ? "bg-gray-800 text-white border border-gray-700" : "bg-white text-gray-800"
+        isDarkMode ? "bg-gray-800 border border-gray-700 text-white" : "bg-white border border-gray-300 text-gray-800"
       }`}>
         
         <div className="mb-4">
@@ -95,7 +95,7 @@ const AddHabit = () => {
             value={formData.habitName}
             onChange={handleInputChange}
             className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
+              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300 text-white" : "border-gray-300 focus:ring-blue-500 text-gray-800"
             }`}
             placeholder="e.g., Morning Run"
             required
@@ -110,7 +110,7 @@ const AddHabit = () => {
             value={formData.habitDescription}
             onChange={handleInputChange}
             className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
+              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300 text-white" : "border-gray-300 focus:ring-blue-500 text-gray-800"
             }`}
             placeholder="e.g., Run 2 km every morning"
             required
@@ -125,7 +125,7 @@ const AddHabit = () => {
             value={formData.numberOfDays}
             onChange={handleInputChange}
             className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300" : "border-gray-300 focus:ring-blue-500"
+              isDarkMode ? "bg-gray-700 border-gray-600 focus:ring-blue-300 text-white" : "border-gray-300 focus:ring-blue-500 text-gray-800"
             }`}
             min={1}
             placeholder="e.g., 30"
@@ -134,7 +134,7 @@ const AddHabit = () => {
         </div>
 
         <button type="submit" className="w-full py-3 rounded-lg font-bold transition-all
-          bg-blue-500 text-white hover:bg-blue-600">
+          bg-blue-500 text-white hover:bg-blue-600 cursor-pointer">
           Add Habit
         </button>
 
