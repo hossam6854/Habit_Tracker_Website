@@ -5,6 +5,8 @@ import Todos from "./todos";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
+import { Check, ChevronRight, Clock, Calendar, Trophy } from 'lucide-react';
+
 
 const HomePage = () => {
   const { data, updateDaysLeft, getMissedDates } = useContext(ApiContext);
@@ -105,7 +107,7 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl font-bold mb-4">SHeToo</h1>
+          <h1 className="text-3xl font-bold mb-4">Habit Tracker Website</h1>
           <input
             type="text"
             placeholder="Search for a habit..."
@@ -134,19 +136,42 @@ const HomePage = () => {
                 <p className="text-gray-600 mb-2">
                   <strong>Description:</strong> {habit.habitDescription}
                 </p>
-                <p className="text-gray-500">
-                  <strong>Original Days:</strong> {habit.numberOfDays} days
+
+
+                <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="space-y-1">
+                <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
+                  <Clock className="h-4 w-4" /> Days Left
                 </p>
-                <p className="text-gray-500">
-                  <strong>Remaining Days:</strong> {habit.remainingDays} days
+                <p className="font-semibold text-white dark:text-black">{habit.remainingDays}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-muted-foreground flex items-center gap-1 text-white dark:text-black">
+                  <Calendar className="h-4 w-4" /> Started
                 </p>
-                <p className="text-green-600">
-                  Completion dates:
-                  {habit.completionDates.length || "No records"}
-                </p>
-                <p className="text-red-600">
-                  Missed dates: {getMissedDates(habit).length || "No records"}
-                </p>
+                <p className="font-semibold text-white dark:text-black">{new Date(habit.startDate).toLocaleDateString('en-GB')}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-muted-foreground text-white dark:text-black">Missed Days</p>
+                <p className="font-semibold text-red-600"> {getMissedDates(habit).length || 0} {getMissedDates(habit).length === 1 ? 'day' : 'days'}</p>
+              </div>
+
+              
+              <div className="space-y-1">
+                <p className="text-muted-foreground text-white dark:text-black">Completion Dates</p>
+                <p className="font-semibold text-green-600"> {habit.completionDates.length || 0} {habit.completionDates.length === 1 ? 'day' : 'days'}</p>
+              </div>
+
+            </div>
+
+
+
+                
+                
+
+
+
+             
 
                 {/* Progress Bar */}
                 <div className="progress-bar bg-gray-300 rounded-full overflow-hidden h-4 my-4">
@@ -230,7 +255,7 @@ const HomePage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Summary</h2>
+            <h2 className="text-2xl font-bold mb-4 ">Summary</h2>
 
             {/* Pie Chart */}
             <ResponsiveContainer width="100%" height={300}>

@@ -21,7 +21,7 @@ const AddHabit = () => {
     [name]:
       name === "numberOfDays"
         ? Math.max(0, parseInt(value) || 0)
-        : value.trim(), // إزالة المسافات الزائدة
+        : value, // إزالة المسافات الزائدة
   }));
 };
 
