@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, HashRouter as Router } from "react-router-dom";
 import "./App.css";
 import AddHabit from "./Components/AddHabit";
 import { ApiProvider } from "./Components/contextapi";
